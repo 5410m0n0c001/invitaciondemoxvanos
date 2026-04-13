@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestra Boda</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Driver.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css"/>
+    
+    <!-- Meta tags SEO / Compartir -->
+    <meta property="og:title" content="¡Estás Invitado a Nuestra Boda!">
+    <meta property="og:description" content="Acompáñanos a celebrar nuestro gran día.">
+    <meta property="og:image" content="sobre.png">
+    <meta property="og:url" content="https://5410m0n0c001.github.io/invitacion-demo/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="¡Estás Invitado a Nuestra Boda!">
+    <meta name="twitter:description" content="Acompáñanos a celebrar nuestro gran día.">
+    <meta name="twitter:image" content="https://5410m0n0c001.github.io/invitacion-demo/sobre.png">
+</head>
+<body>
+
+    <!-- SOBRE DE CARTA - Pantalla de entrada -->
+    <div class="envelope-screen" id="envelope-screen">
+        <p class="envelope-hint">Toca para abrir</p>
+        <video id="envelope-video" class="envelope-video" muted playsinline preload="auto" poster="sobre.png">
+            <source src="sobre.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Navegación Flotante -->
+    <nav class="floating-nav">
+        <ul>
+            <li><a href="#hero" class="active"><i class='bx bx-home-heart'></i></a></li>
+            <li><a href="#fecha"><i class='bx bx-calendar-event'></i></a></li>
+            <li><a href="#ubicacion"><i class='bx bx-map'></i></a></li>
+            <li><a href="#codigo-vestimenta"><i class='bx bx-closet' ></i></a></li>
+            <li><a href="#padrinos"><i class='bx bx-group'></i></a></li>
+            <li><a href="#mesa-regalos"><i class='bx bx-gift'></i></a></li>
+            <li><a href="#fotos"><i class='bx bx-camera'></i></a></li>
+            <li><a href="#rsvp"><i class='bx bx-check-double'></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- Reproductor de Audio -->
+    <button class="audio-btn" id="audio-btn" aria-label="Reproducir música">
+        <video id="audio-btn-video" src="music2.mp4" muted loop autoplay playsinline></video>
+    </button>
+    
+    <!-- Botón Compartir Sticky -->
+    <button class="share-btn-sticky" id="share-btn-sticky" aria-label="Compartir invitación">
+        <img src="compartir.png" alt="Compartir" class="share-icon-img">
+    </button>
+
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Hojas decorativas flotantes -->
+    <div class="leaf leaf-1"></div>
+    <div class="leaf leaf-2"></div>
+    <div class="leaf leaf-3"></div>
+
+    <!-- Celebration Elements -->
+    <div id="balloons-container" class="balloons-container"></div>
+    <audio id="celebration-sound">
+        <source src="sonido.mp3" type="audio/mpeg">
+    </audio>
+
+    <main>
+        <!-- SECCIÓN 1: HERO / PORTADA -->
+        <section id="hero" class="hero-section">
+            <div class="paper-texture-top"></div>
+
+            <!-- Esquinas decorativas a nivel de sección -->
+            <img src="esquina1.png" alt="Decoración esquina" class="corner-img corner-top-left animate-corner-tl">
+            <img src="esquina2.png" alt="Decoración esquina" class="corner-img corner-bottom-right animate-corner-br">
+            
+            <div class="hero-video-container reveal">
+                <!-- Video de portada -->
+                <video class="hero-video" autoplay loop muted playsinline>
+                    <source src="portada.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="hero-content text-center reveal">
+                <p class="subtitle mt-3 text-reveal"><span class="typing-container">¡NOS CASAMOS!</span></p>
+                <h1 class="names text-reveal"><span class="typing-container">Carolina & Daniel</span></h1>
+                <p class="date-txt text-reveal"><span class="typing-container">Te invitamos a celebrar nuestra unión</span></p>
+                
+                <div class="date-highlight mt-2 reveal">
+                    <span class="day">15</span>
+                    <span class="month-year">Noviembre<br>2026</span>
+                </div>
+            </div>
+            
+            <div class="paper-texture-bottom"></div>
+        </section>
+
+        <!-- SECCIÓN 2: CUENTA REGRESIVA -->
+        <section id="fecha" class="countdown-section py-5">
+            <div class="container text-center reveal">
+                <h2 class="section-title text-reveal">Faltan</h2>
+                <div class="countdown-container reveal">
+                    <div class="time-box">
+                        <span id="days" class="number">00</span>
+                        <span class="label">Días</span>
+                    </div>
+                    <span class="colon">:</span>
+                    <div class="time-box">
+                        <span id="hours" class="number">00</span>
+                        <span class="label">Horas</span>
+                    </div>
+                    <span class="colon">:</span>
+                    <div class="time-box">
+                        <span id="minutes" class="number">00</span>
+                        <span class="label">Minutos</span>
+                    </div>
+                    <span class="colon">:</span>
+                    <div class="time-box">
+                        <span id="seconds" class="number">00</span>
+                        <span class="label">Segundos</span>
+                    </div>
+                </div>
+
+                <div class="calendar-dropdown-container mt-4 reveal">
+                    <button class="btn-primary btn-add-calendar btn-zoom-pulse" id="calendar-btn">
+                        <i class='bx bx-calendar-plus'></i> Agendar Día
+                    </button>
+                    <div class="calendar-options" id="calendar-options">
+                        <a href="#" id="cal-google" class="cal-opt"><i class='bx bxl-google'></i> Google Calendar</a>
+                        <a href="#" id="cal-outlook" class="cal-opt"><i class='bx bxl-windows'></i> Outlook</a>
+                        <a href="#" id="cal-apple" class="cal-opt"><i class='bx bxl-apple'></i> Apple Calendar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: UBICACIÓN -->
+        <section id="ubicacion" class="location-section py-5 bg-light-green">
+            <div class="paper-rip-top"></div>
+            <div class="container text-center reveal">
+                <h2 class="section-title text-reveal">Dónde y Cuándo</h2>
+                
+                <div class="location-cards mt-4">
+                    <!-- Ceremonia -->
+                    <div class="card event-card card-flip-up slide-in-left">
+                        <div class="card-icon"><i class='bx bx-church'></i></div>
+                        <h3 class="text-reveal">Ceremonia Religiosa</h3>
+                        <p class="time text-reveal">16:00 HRS</p>
+                        <p class="place text-reveal">Parroquia de San Miguel Arcángel</p>
+                        <p class="address text-reveal">Av. Principal #123, Centro Histórico</p>
+                        <a href="https://maps.app.goo.gl/dFwnr9tEpqTaKP7G9" target="_blank" class="location-btn-img reveal mt-2">
+                            <img src="ubica.png" alt="Ubica la Ceremonia" class="ubica-btn-img zoom-hover scale-pulse">
+                            <span class="btn-legend">Haz clic para visualizar Google Maps</span>
+                        </a>
+                    </div>
+
+                    <!-- Recepción -->
+                    <div class="card event-card card-flip-up slide-in-right">
+                        <div class="card-icon"><i class='bx bx-glass'></i></div>
+                        <h3 class="text-reveal">Recepción</h3>
+                        <p class="time text-reveal">18:30 HRS</p>
+                        <p class="place text-reveal">Hacienda Santa Mónica</p>
+                        <p class="address text-reveal">Carretera Norte Km 5.5</p>
+                        <a href="https://maps.app.goo.gl/dFwnr9tEpqTaKP7G9" target="_blank" class="location-btn-img reveal mt-2">
+                            <img src="ubica.png" alt="Ubica la Recepción" class="ubica-btn-img zoom-hover scale-pulse">
+                            <span class="btn-legend">Haz clic para visualizar Google Maps</span>
+                        </a>
+                        <a href="mapa.html" class="btn-secondary btn-zoom-pulse mt-2" style="background: var(--primary-color); color: white; border: none;">
+                            <i class='bx bx-cube-alt'></i> Ubica tu mesa
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="paper-rip-bottom"></div>
+        </section>
+
+        <!-- SECCIÓN 4: CÓDIGO DE VESTIMENTA -->
+        <section id="codigo-vestimenta" class="dresscode-section py-5">
+            <div class="container text-center reveal">
+                <h2 class="section-title text-reveal">Código de Vestimenta</h2>
+                <div class="dresscode-icon animate-dresscode-icon slide-in-left">
+                    <img src="icono.png" alt="Código de Vestimenta" class="dresscode-icon-img scale-pulse">
+                </div>
+                <h3 class="dresscode-type mt-2">Formal / Rigurosa Etiqueta</h3>
+                <p class="mt-2 text-muted">Agradecemos respetar nuestra paleta de colores reservando el blanco exclusivo para la novia.</p>
+                
+                <div class="color-palette mt-3 reveal">
+                    <div class="color-swatch text-reveal" style="background-color: #2F4F4F;"></div>
+                    <div class="color-swatch text-reveal" style="background-color: #000000;"></div>
+                    <div class="color-swatch text-reveal" style="background-color: #556B2F;"></div>
+                    <div class="color-swatch text-reveal" style="background-color: #BDB76B;"></div>
+                    <div class="color-swatch no-color text-reveal" style="background-color: #FFFFFF; border: 2px dashed #ff4d4d;">
+                        <span class="no-text text-danger"><i class='bx bx-x' ></i></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: PADRINOS -->
+        <section id="padrinos" class="padrinos-section py-5 bg-light-green section-fold">
+             <div class="paper-rip-top"></div>
+             <div class="container text-center reveal-fold">
+                <h2 class="section-title">Padrinos</h2>
+                <p class="subtitle text-sm mb-4">Agradecemos a quienes nos acompañan en este paso tan importante.</p>
+
+                <div class="padrinos-grid">
+                    <div class="padrino-item reveal sequence-1">
+                        <h4>De Velación</h4>
+                        <p>Sr. Arturo López<br>Sra. María Elena</p>
+                    </div>
+                    <div class="padrino-item reveal sequence-2">
+                        <h4>De Lazo</h4>
+                        <p>Fernando Gómez<br>Laura Martínez</p>
+                    </div>
+                    <div class="padrino-item reveal sequence-3">
+                        <h4>De Arras</h4>
+                        <p>Alejandro Fernández</p>
+                    </div>
+                    <div class="padrino-item reveal sequence-4">
+                        <h4>De Anillos</h4>
+                        <p>Sofia Cárdenas</p>
+                    </div>
+                </div>
+             </div>
+             <div class="paper-rip-bottom"></div>
+        </section>
+
+        <!-- SECCIÓN 6: MESA DE REGALOS -->
+        <section id="mesa-regalos" class="gifts-section py-5 text-center">
+            <div class="container reveal">
+                <div class="icon-large mb-3 slide-in-right">
+                    <img id="gift-icon-png" src="regalo.png" alt="Regalo" class="scale-pulse" style="width: 100px; height: auto; animation: pulseLogo 3s infinite;">
+                </div>
+                <h2 class="section-title">Mesa de Regalos</h2>
+                <p class="mt-3">Su presencia es nuestro mejor regalo, pero si desean tener un detalle con nosotros, pueden hacerlo a través de:</p>
+                
+                <div class="gift-options mt-4">
+                    <div class="gift-card reveal sequence-1">
+                        <h4>Transferencia Bancaria</h4>
+                        <div class="account-details">
+                            <p><strong>Banco:</strong> BBVA</p>
+                            <p><strong>Cuenta:</strong> 1234 5678 9012 3456</p>
+                            <p><strong>CLABE:</strong> 012345678901234567</p>
+                            <p><strong>A nombre de:</strong> Daniel Vargas</p>
+                        </div>
+                        <button class="btn-copy btn-secondary btn-sm mt-2" onclick="copyToClipboard('1234 5678 9012 3456')">
+                            <i class='bx bx-copy'></i> Copiar N° Cuenta
+                        </button>
+                    </div>
+
+                    <div class="gift-card card-flip-up slide-right">
+                        <h4>Tiendas Departamentales</h4>
+                        <div class="store-links mt-4">
+                            <a href="https://mesaderegalos.liverpool.com.mx/" target="_blank" class="store-btn-logo reveal">
+                                <img src="liverpoollogo.png" alt="Liverpool" class="gift-logo scale-pulse">
+                            </a>
+                            <a href="https://www.elpalaciodehierro.com/listaregalos" target="_blank" class="store-btn-logo reveal">
+                                <img src="palaciologo.webp" alt="Palacio de Hierro" class="gift-logo scale-pulse">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SECCIÓN 7: COMPARTE TU FOTO -->
+        <section id="fotos" class="photos-section py-5 section-reveal">
+            <div class="container text-center reveal">
+                <h2 class="section-title">Comparte tu Foto</h2>
+                <p class="mt-3 text-muted">¡Captura los mejores momentos y compártelos con nosotros!</p>
+                
+                <div class="photo-gallery" id="photo-gallery"></div>
+
+                <div class="photo-upload-area mt-4">
+                    <button class="btn-camera" id="btn-camera" aria-label="Tomar foto">
+                        <i class='bx bx-camera'></i>
+                        <span>Tomar Foto</span>
+                    </button>
+                    <input type="file" id="photo-input" accept="image/*" capture="environment" style="display:none;">
+                    
+                    <div class="upload-status" id="upload-status" style="display:none;">
+                        <div class="upload-spinner"></div>
+                        <p>Subiendo foto...</p>
+                    </div>
+                    
+                    <div class="upload-success" id="upload-success" style="display:none;">
+                        <i class='bx bx-check-circle'></i>
+                        <p>¡Foto compartida con éxito!</p>
+                    </div>
+                    <div class="qr-container-wrapper mt-4">
+                        <img id="qr-image" src="qr.png" alt="Código QR para compartir fotos" class="qr-code-img">
+                        <button class="btn-share-qr mt-3" id="btn-share-qr">
+                            <img src="compartir.png" alt="Compartir" class="share-icon-qr-img"> Compartir QR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- SECCIÓN: MÁS POSIBILIDADES -->
+        <section id="mas-posibilidades" class="possibilities-section py-5 bg-light-green section-fold">
+             <div class="paper-rip-top"></div>
+             <div class="container text-center reveal">
+                <h2 class="section-title">Aún hay más secciones y posibilidades</h2>
+                <div class="possibilities-content mt-4">
+                    <p class="mb-3">¿Qué hay más secciones que se pueden agregar? Como un sketchup completo del evento en un timeline lineal, fotografías, vídeos o material que los festejados gustan compartir. El diseño es personalizado donde el usuario puede elegir colores, diseño, y agregar alguna funcionalidad que desee.</p>
+                    <p class="mb-3">También se puede agregar una tarjeta de Invitación Física con tecnología NFC dentro de un hermoso sobre como recuerdo. Opcionalmente, entregar a cada invitado un sobre igual de los anfitriones con una tarjeta personalizada.</p>
+                    <p>Esta invitación <strong>no tiene fecha de caducidad</strong>, permanecerá en línea por tiempo indefinido sin que tengas que pagar almacenamiento extra con un álbum digital donde se guardan todas las fotos que tus invitados subieron.</p>
+                </div>
+             </div>
+             <div class="paper-rip-bottom"></div>
+        </section>
+
+        <!-- SECCIÓN 7: ASISTENCIA (RSVP) -->
+        <section id="rsvp" class="rsvp-section footer-section py-5 bg-dark">
+            <div class="container text-center reveal text-white">
+                <h2 class="section-title title-light">Confirma tu Asistencia</h2>
+                <p class="mt-3 mb-4">Por favor envíanos un mensaje antes del 1° de Noviembre para reservar tu lugar.</p>
+                        <div class="rsvp-btn-container mt-4 mb-4">
+                            <a href="https://primaveraeventsgroup.com/invitacion/" target="_blank" class="rsvp-custom-btn">
+                                <img src="confirma.png" alt="Confirmar Asistencia" class="rsvp-img-btn zoom-hover scale-pulse">
+                                <span class="btn-legend text-white">haz clic para Confirmar tu asistencia</span>
+                            </a>
+                        </div>
+                </div>
+
+                <div class="footer-names mt-5">
+                    <h3>C & D</h3>
+                    <p class="text-sm mt-2 text-muted-light">¡Te esperamos para celebrar el amor!</p>
+                </div>
+
+                <div class="footer-coordination mt-5 pt-4" style="border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.95rem; background: rgba(0,0,0,0.45); padding: 25px 15px; border-radius: 20px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); margin: 0 10px;">
+                    <p class="mb-3" style="font-family: var(--font-accent); color: var(--accent-color); font-weight: 700; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Este evento fue coordinado o será coordinado por Primavera Events Group.</p>
+                    <a href="https://primaveraeventsgroup.com/" target="_blank" style="color: white; text-decoration: none; border-bottom: 2px solid var(--accent-color); padding-bottom: 4px; font-weight: 600; display: inline-block;">
+                        Si deseas conocer más acerca de Primavera Group haz clic en este enlace
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Album Visor (Modal) -->
+    <div id="album-visor" class="album-visor-container">
+        <span class="visor-close" id="visor-close">&times;</span>
+        <img class="visor-content" id="visor-img">
+        <div id="visor-caption"></div>
+    </div>
+
+    <!-- Smart Landing Overlay for QR -->
+    <div id="qr-camera-overlay" class="qr-overlay-screen" style="display:none;">
+        <div class="qr-overlay-content">
+            <h1 class="names">C & D</h1>
+            <p>¡Ayúdanos a capturar este momento!</p>
+            <button id="btn-qr-take-photo" class="btn-camera mt-4">
+                <i class='bx bx-camera'></i> Abrir Cámara
+            </button>
+            <button id="btn-qr-skip" class="btn-skip mt-3">Ver Invitación</button>
+        </div>
+    </div>
+    
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <!-- Driver.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
+    
+    <!-- JS Scripts -->
+    <script src="js/script.js"></script>
+</body>
+</html>
+

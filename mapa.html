@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ubicación de Mesas - Nuestra Boda</title>
+    <!-- Import the component -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f7f9f4;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        model-viewer {
+            width: 100%;
+            flex-grow: 1;
+            background-color: #f7f9f4;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #556b2f;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background: #556b2f;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            z-index: 20;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            color: #666;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#recepcion" class="back-btn">← Volver</a>
+    <div class="header">
+        <h1>Ubicación de Mesas</h1>
+    </div>
+    
+    <model-viewer 
+        src="https://raw.githubusercontent.com/5410m0n0c001/layout-antigravity1/main/4.glb" 
+        ios-src="" 
+        alt="Mapa 3D de la recepción" 
+        shadow-intensity="1" 
+        camera-controls 
+        auto-rotate 
+        ar>
+    </model-viewer>
+
+    <div class="controls">
+        Desliza para rotar | Pellizca para zoom
+    </div>
+</body>
+</html>

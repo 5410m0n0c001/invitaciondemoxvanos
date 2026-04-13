@@ -1,4 +1,4 @@
-﻿// ENVELOPE VIDEO ANIMATION
+// ENVELOPE VIDEO ANIMATION
 const envelopeScreen = document.getElementById('envelope-screen');
 const envelopeVideo = document.getElementById('envelope-video');
 const envelopeHint = document.querySelector('.envelope-hint');
@@ -920,7 +920,7 @@ function startGuidedTour() {
                 element: '#fotos',
                 popover: {
                     title: 'Comparte tu Foto',
-                    description: 'Este Ã¡lbum es dinÃ¡mico. Las fotos que tomes en el evento se mostrarÃ¡n automÃ¡ticamente en tiempo real.',
+                    description: 'Este álbum es dinámico. Las fotos que tomes en el evento se mostrarán automáticamente en tiempo real.',
                     side: "top",
                     align: 'center'
                 }

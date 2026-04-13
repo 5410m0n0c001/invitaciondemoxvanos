@@ -1,4 +1,4 @@
-// ENVELOPE VIDEO ANIMATION
+﻿// ENVELOPE VIDEO ANIMATION
 const envelopeScreen = document.getElementById('envelope-screen');
 const envelopeVideo = document.getElementById('envelope-video');
 const envelopeHint = document.querySelector('.envelope-hint');
@@ -197,7 +197,7 @@ function startCountdown() {
         
         if (distance < 0) {
             clearInterval(countdown);
-            if (countdownContainer) countdownContainer.innerHTML = "<h3>¡El gran día ha llegado!</h3>";
+            if (countdownContainer) countdownContainer.innerHTML = "<h3>Â¡El gran dÃ­a ha llegado!</h3>";
             triggerCelebration();
             return;
         }
@@ -245,8 +245,8 @@ function createPetal(container) {
 
 // HERO TYPING ANIMATION
 async function startHeroTyping() {
-    const nameText = "Ángela Alegría Becerra";
-    const line2 = "Te invito a celebrar conmigo este día tan especial";
+    const nameText = "Ãngela AlegrÃ­a Becerra";
+    const line2 = "Te invito a celebrar conmigo este dÃ­a tan especial";
 
     const namesEl = document.querySelector('.names-cursive');
     if (namesEl) {
@@ -438,7 +438,7 @@ if (audioBtn && bgMusic) {
             bgMusic.play().then(() => {
                 audioBtn.classList.add('playing');
                 if (bgMusicVideo) bgMusicVideo.play();
-                audioBtn.setAttribute('aria-label', "Pausar música");
+                audioBtn.setAttribute('aria-label', "Pausar mÃºsica");
             }).catch(err => {
                 console.warn("Audio blocked:", err);
                 // Even if audio fails, toggle the UI for user feedback
@@ -449,7 +449,7 @@ if (audioBtn && bgMusic) {
             bgMusic.pause();
             audioBtn.classList.remove('playing');
             if (bgMusicVideo) bgMusicVideo.pause();
-            audioBtn.setAttribute('aria-label', "Reproducir música");
+            audioBtn.setAttribute('aria-label', "Reproducir mÃºsica");
         }
     });
     
@@ -467,7 +467,7 @@ if (audioBtn && bgMusic) {
 // CLIPBOARD COPY
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('¡Número de cuenta copiado!');
+        alert('Â¡NÃºmero de cuenta copiado!');
     }).catch(err => {
         console.error('Failed to copy: ', err);
     });
@@ -480,8 +480,8 @@ const shareBtn = document.getElementById('share-btn-sticky');
 if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
         const shareData = {
-            title: 'Invitación a los XV Años de Angela Alegría',
-            text: '¡Acompáñame a celebrar mis XV años! Te espero con mucha ilusión.',
+            title: 'InvitaciÃ³n a los XV AÃ±os de Angela AlegrÃ­a',
+            text: 'Â¡AcompÃ¡Ã±ame a celebrar mis XV aÃ±os! Te espero con mucha ilusiÃ³n.',
             url: window.location.href.split('?')[0] // Clean URL
         };
 
@@ -495,7 +495,7 @@ if (shareBtn) {
             // Fallback: Copy URL to clipboard
             try {
                 await navigator.clipboard.writeText(shareData.url);
-                alert('Enlace de invitación copiado al portapapeles.');
+                alert('Enlace de invitaciÃ³n copiado al portapapeles.');
             } catch (err) {
                 console.error('Clipboard error:', err);
             }
@@ -516,9 +516,9 @@ if (calendarBtn && calendarOptions) {
     });
 
     const eventDetails = {
-        title: "XV Años de Angela Alegría",
-        description: "Te invito a celebrar mis XV años en este sueño hecho realidad.",
-        location: "Jardín Villa Leona, C. San Luis 100, 62555 Jiutepec, Mor.",
+        title: "XV AÃ±os de Angela AlegrÃ­a",
+        description: "Te invito a celebrar mis XV aÃ±os en este sueÃ±o hecho realidad.",
+        location: "JardÃ­n Villa Leona, C. San Luis 100, 62555 Jiutepec, Mor.",
         start: "20260718T150000",
         end: "20260719T000000"
     };
@@ -597,8 +597,8 @@ function renderCloudinaryGallery(resources) {
     
     html += `
         <div class="photo-gallery-latest reveal active">
-            <span class="photo-badge">Última Foto</span>
-            <img src="${latestUrl}" alt="Última foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
+            <span class="photo-badge">Ãšltima Foto</span>
+            <img src="${latestUrl}" alt="Ãšltima foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
         </div>
     `;
 
@@ -696,14 +696,14 @@ function initQRCode() {
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     files: [file],
-                    title: 'Código QR de mis XV Años',
-                    text: 'Escanea este código para compartir tus fotos conmigo.',
+                    title: 'CÃ³digo QR de mis XV AÃ±os',
+                    text: 'Escanea este cÃ³digo para compartir tus fotos conmigo.',
                     url: window.location.href // Also include URL for context
                 });
             } else if (navigator.share) {
                 await navigator.share({
-                    title: 'Código QR de mis XV Años',
-                    text: 'Escanea este código para compartir tus fotos conmigo.',
+                    title: 'CÃ³digo QR de mis XV AÃ±os',
+                    text: 'Escanea este cÃ³digo para compartir tus fotos conmigo.',
                     url: qrUrl
                 });
             } else {
@@ -715,8 +715,8 @@ function initQRCode() {
             // Simple link fallback
             if (navigator.share) {
                 await navigator.share({
-                    title: 'Álbum de Fotos de los XV Años',
-                    text: '¡Sube tus fotos aquí!',
+                    title: 'Ãlbum de Fotos de los XV AÃ±os',
+                    text: 'Â¡Sube tus fotos aquÃ­!',
                     url: window.location.origin + window.location.pathname.replace('index.html', '') + 'smartlanding.html'
                 });
             }
@@ -807,209 +807,10 @@ if (btnFoods && btnDrinks) {
     });
 }
 
-// PHOTO UPLOAD & GLOBAL GALLERY (CLOUDINARY)
-const CLOUD_NAME = 'dkozw2kmy';
-const UPLOAD_PRESET = 'unsigned_boda';
-const PHOTO_TAG = 'boda-fotos';
-
-const btnCamera = document.getElementById('btn-camera');
-const photoInput = document.getElementById('photo-input');
-const uploadStatus = document.getElementById('upload-status');
-const uploadSuccess = document.getElementById('upload-success');
-const photoGallery = document.getElementById('photo-gallery');
-
-async function fetchCloudinaryGallery() {
-    try {
-        const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${PHOTO_TAG}.json?t=${Date.now()}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        renderCloudinaryGallery(data.resources);
-    } catch (err) { console.error('Error fetching gallery:', err); }
-}
-
-function renderCloudinaryGallery(resources) {
-    if (!photoGallery || !resources || resources.length === 0) {
-        if (photoGallery) photoGallery.innerHTML = '';
-        return;
-    }
-    resources.sort((a, b) => b.version - a.version);
-    let html = '';
-    
-    // Feature the latest photo as the "visor" entry
-    const latest = resources[0];
-    const latestUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/v${latest.version}/${latest.public_id}.${latest.format}`;
-    
-    html += `
-        <div class="photo-gallery-latest reveal active">
-            <span class="photo-badge">Última Foto</span>
-            <img src="${latestUrl}" alt="Última foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
-        </div>
-    `;
-
-    if (resources.length > 1) {
-        html += '<div class="photo-gallery-grid reveal active">';
-        const limit = Math.min(resources.length, 13); // Show more thumbnails
-        for (let i = 1; i < limit; i++) {
-            const r = resources[i];
-            const fullUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
-            const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_300,h_300,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
-            html += `<img src="${thumbUrl}" alt="Foto del evento" onclick="openVisor('${fullUrl}')" style="cursor: pointer;">`;
-        }
-        html += '</div>';
-    }
-    photoGallery.innerHTML = html;
-}
-
-// ALBUM VISOR LOGIC
-const albumVisor = document.getElementById('album-visor');
-const visorImg = document.getElementById('visor-img');
-const visorClose = document.getElementById('visor-close');
-
-function openVisor(url) {
-    if (albumVisor && visorImg) {
-        visorImg.src = url;
-        albumVisor.style.display = "flex"; // Changed to flex for centering
-        document.body.style.overflow = "hidden"; // Prevent background scroll
-    }
-}
-
-if (visorClose) {
-    visorClose.onclick = () => {
-        albumVisor.style.display = "none";
-        document.body.style.overflow = "auto";
-    };
-}
-
-window.addEventListener('click', (event) => {
-    if (event.target == albumVisor) {
-        albumVisor.style.display = "none";
-        document.body.style.overflow = "auto";
-    }
-});
-
-fetchCloudinaryGallery();
-
-if (btnCamera) {
-    btnCamera.addEventListener('click', () => photoInput.click());
-}
-
-if (photoInput) {
-    photoInput.addEventListener('change', async function(e) {
-        var file = e.target.files[0];
-        if (!file) return;
-        btnCamera.style.display = 'none';
-        uploadStatus.style.display = 'flex';
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', UPLOAD_PRESET);
-        formData.append('folder', 'xv-angela-alegria');
-        formData.append('tags', 'xv-angela');
-        try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
-            if (!res.ok) throw new Error('Upload failed');
-            uploadStatus.style.display = 'none';
-            uploadSuccess.style.display = 'flex';
-            setTimeout(() => { fetchCloudinaryGallery(); }, 1500);
-            setTimeout(function() {
-                uploadSuccess.style.display = 'none';
-                btnCamera.style.display = 'flex';
-                photoInput.value = '';
-            }, 3000);
-        } catch (err) {
-            console.error('Upload error:', err);
-            uploadStatus.style.display = 'none';
-            btnCamera.style.display = 'flex';
-            photoInput.value = '';
-            alert('Error al subir la foto.');
-        }
-    });
-}
-// QR CODE SHARING (Using static image)
-function initQRCode() {
-    const btnShareQr = document.getElementById('btn-share-qr');
-    if (!btnShareQr) return;
-
-    btnShareQr.addEventListener('click', async () => {
-        try {
-            // Use the absolute path for the QR image
-            const qrUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'qr.png';
-            const response = await fetch(qrUrl);
-            const blob = await response.blob();
-            const file = new File([blob], "codigo-qr-xv-angela.png", { type: "image/png" });
-            
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({
-                    files: [file],
-                    title: 'Código QR de mis XV Años',
-                    text: 'Escanea este código para compartir tus fotos conmigo.',
-                    url: window.location.href // Also include URL for context
-                });
-            } else if (navigator.share) {
-                await navigator.share({
-                    title: 'Código QR de mis XV Años',
-                    text: 'Escanea este código para compartir tus fotos conmigo.',
-                    url: qrUrl
-                });
-            } else {
-                // Fallback for desktop or non-sharing browsers: open in new tab
-                window.open(qrUrl, '_blank');
-            }
-        } catch (err) {
-            console.error('Error sharing QR:', err);
-            // Simple link fallback
-            if (navigator.share) {
-                await navigator.share({
-                    title: 'Álbum de Fotos de los XV Años',
-                    text: '¡Sube tus fotos aquí!',
-                    url: window.location.origin + window.location.pathname.replace('index.html', '') + 'smartlanding.html'
-                });
-            }
-        }
-    });
-}
-
-// HANDLE URL ACTIONS (Like auto-triggering camera)
-function handleUrlActions() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const action = urlParams.get('action');
-
-    if (action === 'take-photo') {
-        const overlay = document.getElementById('qr-camera-overlay');
-        const btnTakePhoto = document.getElementById('btn-qr-take-photo');
-        const btnSkip = document.getElementById('btn-qr-skip');
-        const btnCameraReal = document.getElementById('btn-camera');
-
-        if (overlay) {
-            overlay.style.display = 'flex';
-            
-            // If they want to take the photo
-            btnTakePhoto.addEventListener('click', () => {
-                overlay.style.display = 'none';
-                const fotosSection = document.getElementById('fotos');
-                if (fotosSection) {
-                    fotosSection.scrollIntoView({ behavior: 'auto' });
-                    if (btnCameraReal) btnCameraReal.click();
-                }
-            });
-
-            // If they just want to see the invitation
-            btnSkip.addEventListener('click', () => {
-                overlay.style.display = 'none';
-            });
-        }
-    }
-}
-
-// Initialize on Load
-window.addEventListener('load', () => {
-    initQRCode();
-    handleUrlActions();
-});
-
 // GUIDED TOUR LOGIC
 function startGuidedTour() {
     if (!window.driver) {
-        console.warn("Driver.js no está cargado.");
+        console.warn("Driver.js no estÃ¡ cargado.");
         return;
     }
 
@@ -1020,16 +821,16 @@ function startGuidedTour() {
         animate: true,
         allowClose: true,
         doneBtnText: 'Finalizar',
-        nextBtnText: 'Siguiente →',
-        prevBtnText: '← Atrás',
+        nextBtnText: 'Siguiente â†’',
+        prevBtnText: 'â† AtrÃ¡s',
         progressText: 'Paso {{current}} de {{total}}',
         popoverClass: 'tour-popover',
         steps: [
             {
                 element: '#audio-btn',
                 popover: {
-                    title: 'Música y Animación',
-                    description: 'Disfruta de la experiencia completa con música. Puedes pausarla o reanudarla aquí.',
+                    title: 'MÃºsica y AnimaciÃ³n',
+                    description: 'Disfruta de la experiencia completa con mÃºsica. Puedes pausarla o reanudarla aquÃ­.',
                     side: "left",
                     align: 'center'
                 }
@@ -1037,8 +838,8 @@ function startGuidedTour() {
             {
                 element: '#hero',
                 popover: {
-                    title: 'Mis XV Años',
-                    description: '¡Bienvenidos a mi invitación! Desliza para conocer todos los detalles de esta gran noche.',
+                    title: 'Mis XV AÃ±os',
+                    description: 'Â¡Bienvenidos a mi invitaciÃ³n! Desliza para conocer todos los detalles de esta gran noche.',
                     side: "bottom",
                     align: 'center'
                 }
@@ -1055,8 +856,8 @@ function startGuidedTour() {
             {
                 element: '#calendar-btn',
                 popover: {
-                    title: 'Agendar Día',
-                    description: 'Toca este botón para añadir el evento a tu calendario.',
+                    title: 'Agendar DÃ­a',
+                    description: 'Toca este botÃ³n para aÃ±adir el evento a tu calendario.',
                     side: "right",
                     align: 'center'
                 }
@@ -1064,8 +865,8 @@ function startGuidedTour() {
             {
                 element: '#ubicacion',
                 popover: {
-                    title: 'Dónde y Cuándo',
-                    description: 'Conoce los detalles de la recepción y usa los botones para abrir la ruta exacta en tu mapa.',
+                    title: 'DÃ³nde y CuÃ¡ndo',
+                    description: 'Conoce los detalles de la recepciÃ³n y usa los botones para abrir la ruta exacta en tu mapa.',
                     side: "top",
                     align: 'start'
                 }
@@ -1074,7 +875,7 @@ function startGuidedTour() {
                 element: '#itinerario',
                 popover: {
                     title: 'Itinerario',
-                    description: 'Acompáñanos minuto a minuto en cada momento especial que hemos preparado.',
+                    description: 'AcompÃ¡Ã±anos minuto a minuto en cada momento especial que hemos preparado.',
                     side: "top",
                     align: 'center'
                 }
@@ -1082,7 +883,7 @@ function startGuidedTour() {
             {
                 element: '#codigo-vestimenta',
                 popover: {
-                    title: 'Código de Vestimenta',
+                    title: 'CÃ³digo de Vestimenta',
                     description: 'Consulta las sugerencias para el evento.',
                     side: "top",
                     align: 'center'
@@ -1092,7 +893,7 @@ function startGuidedTour() {
                 element: '#padrinos',
                 popover: {
                     title: 'Familia',
-                    description: 'Con amor y gratitud a quienes me han acompañado en este camino.',
+                    description: 'Con amor y gratitud a quienes me han acompaÃ±ado en este camino.',
                     side: "top",
                     align: 'center'
                 }
@@ -1101,7 +902,7 @@ function startGuidedTour() {
                 element: '#menus',
                 popover: {
                     title: 'Nuestra Propuesta',
-                    description: 'Conoce el detalle del banquete y la coctelería que hemos seleccionado para ti.',
+                    description: 'Conoce el detalle del banquete y la coctelerÃ­a que hemos seleccionado para ti.',
                     side: "top",
                     align: 'center'
                 }
@@ -1110,7 +911,7 @@ function startGuidedTour() {
                 element: '#mesa-regalos',
                 popover: {
                     title: 'Mesa de Regalos',
-                    description: 'Si gustas tener un detalle, aquí encontrarás nuestras sugerencias.',
+                    description: 'Si gustas tener un detalle, aquÃ­ encontrarÃ¡s nuestras sugerencias.',
                     side: "top",
                     align: 'center'
                 }
@@ -1119,7 +920,7 @@ function startGuidedTour() {
                 element: '#fotos',
                 popover: {
                     title: 'Comparte tu Foto',
-                    description: 'Este álbum es dinámico. Las fotos que tomes en el evento se mostrarán automáticamente en tiempo real.',
+                    description: 'Este Ã¡lbum es dinÃ¡mico. Las fotos que tomes en el evento se mostrarÃ¡n automÃ¡ticamente en tiempo real.',
                     side: "top",
                     align: 'center'
                 }
@@ -1128,7 +929,7 @@ function startGuidedTour() {
                 element: '#clima',
                 popover: {
                     title: 'Clima en Tiempo Real',
-                    description: 'Prepara tu visita conociendo las condiciones actuales del clima para el día del evento.',
+                    description: 'Prepara tu visita conociendo las condiciones actuales del clima para el dÃ­a del evento.',
                     side: "top",
                     align: 'center'
                 }
@@ -1137,7 +938,7 @@ function startGuidedTour() {
                 element: '#rsvp',
                 popover: {
                     title: 'Confirma tu Asistencia',
-                    description: 'Por favor, haz clic aquí para asegurar tu lugar. ¡Te esperamos!',
+                    description: 'Por favor, haz clic aquÃ­ para asegurar tu lugar. Â¡Te esperamos!',
                     side: "top",
                     align: 'center'
                 }
@@ -1145,7 +946,7 @@ function startGuidedTour() {
         ],
         onDestroyStarted: () => {
             setTimeout(() => {
-                if (!driverObj.hasNextStep() || confirm("¿Estás listo para explorar la invitación por ti mismo?")) {
+                if (!driverObj.hasNextStep() || confirm("Â¿EstÃ¡s listo para explorar la invitaciÃ³n por ti mismo?")) {
                     driverObj.destroy();
                 }
             }, 0);

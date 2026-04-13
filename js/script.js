@@ -197,7 +197,7 @@ function startCountdown() {
         
         if (distance < 0) {
             clearInterval(countdown);
-            if (countdownContainer) countdownContainer.innerHTML = "<h3>Â¡El gran dÃ­a ha llegado!</h3>";
+            if (countdownContainer) countdownContainer.innerHTML = "<h3>¡El gran día ha llegado!</h3>";
             triggerCelebration();
             return;
         }
@@ -245,8 +245,8 @@ function createPetal(container) {
 
 // HERO TYPING ANIMATION
 async function startHeroTyping() {
-    const nameText = "Ãngela AlegrÃ­a Becerra";
-    const line2 = "Te invito a celebrar conmigo este dÃ­a tan especial";
+    const nameText = "Ãngela Alegría Becerra";
+    const line2 = "Te invito a celebrar conmigo este día tan especial";
 
     const namesEl = document.querySelector('.names-cursive');
     if (namesEl) {
@@ -438,7 +438,7 @@ if (audioBtn && bgMusic) {
             bgMusic.play().then(() => {
                 audioBtn.classList.add('playing');
                 if (bgMusicVideo) bgMusicVideo.play();
-                audioBtn.setAttribute('aria-label', "Pausar mÃºsica");
+                audioBtn.setAttribute('aria-label', "Pausar música");
             }).catch(err => {
                 console.warn("Audio blocked:", err);
                 // Even if audio fails, toggle the UI for user feedback
@@ -449,7 +449,7 @@ if (audioBtn && bgMusic) {
             bgMusic.pause();
             audioBtn.classList.remove('playing');
             if (bgMusicVideo) bgMusicVideo.pause();
-            audioBtn.setAttribute('aria-label', "Reproducir mÃºsica");
+            audioBtn.setAttribute('aria-label', "Reproducir música");
         }
     });
     
@@ -467,7 +467,7 @@ if (audioBtn && bgMusic) {
 // CLIPBOARD COPY
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text).then(() => {
-        alert('Â¡NÃºmero de cuenta copiado!');
+        alert('¡Número de cuenta copiado!');
     }).catch(err => {
         console.error('Failed to copy: ', err);
     });
@@ -480,8 +480,8 @@ const shareBtn = document.getElementById('share-btn-sticky');
 if (shareBtn) {
     shareBtn.addEventListener('click', async () => {
         const shareData = {
-            title: 'InvitaciÃ³n a los XV AÃ±os de Angela AlegrÃ­a',
-            text: 'Â¡AcompÃ¡Ã±ame a celebrar mis XV aÃ±os! Te espero con mucha ilusiÃ³n.',
+            title: 'Invitación a los XV Años de Angela Alegría',
+            text: '¡Acompáñame a celebrar mis XV años! Te espero con mucha ilusión.',
             url: window.location.href.split('?')[0] // Clean URL
         };
 
@@ -495,7 +495,7 @@ if (shareBtn) {
             // Fallback: Copy URL to clipboard
             try {
                 await navigator.clipboard.writeText(shareData.url);
-                alert('Enlace de invitaciÃ³n copiado al portapapeles.');
+                alert('Enlace de invitación copiado al portapapeles.');
             } catch (err) {
                 console.error('Clipboard error:', err);
             }
@@ -516,9 +516,9 @@ if (calendarBtn && calendarOptions) {
     });
 
     const eventDetails = {
-        title: "XV AÃ±os de Angela AlegrÃ­a",
-        description: "Te invito a celebrar mis XV aÃ±os en este sueÃ±o hecho realidad.",
-        location: "JardÃ­n Villa Leona, C. San Luis 100, 62555 Jiutepec, Mor.",
+        title: "XV Años de Angela Alegría",
+        description: "Te invito a celebrar mis XV años en este sueño hecho realidad.",
+        location: "Jardín Villa Leona, C. San Luis 100, 62555 Jiutepec, Mor.",
         start: "20260718T150000",
         end: "20260719T000000"
     };
@@ -696,14 +696,14 @@ function initQRCode() {
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     files: [file],
-                    title: 'CÃ³digo QR de mis XV AÃ±os',
-                    text: 'Escanea este cÃ³digo para compartir tus fotos conmigo.',
+                    title: 'Código QR de mis XV Años',
+                    text: 'Escanea este código para compartir tus fotos conmigo.',
                     url: window.location.href // Also include URL for context
                 });
             } else if (navigator.share) {
                 await navigator.share({
-                    title: 'CÃ³digo QR de mis XV AÃ±os',
-                    text: 'Escanea este cÃ³digo para compartir tus fotos conmigo.',
+                    title: 'Código QR de mis XV Años',
+                    text: 'Escanea este código para compartir tus fotos conmigo.',
                     url: qrUrl
                 });
             } else {
@@ -715,8 +715,8 @@ function initQRCode() {
             // Simple link fallback
             if (navigator.share) {
                 await navigator.share({
-                    title: 'Ãlbum de Fotos de los XV AÃ±os',
-                    text: 'Â¡Sube tus fotos aquÃ­!',
+                    title: 'Ãlbum de Fotos de los XV Años',
+                    text: '¡Sube tus fotos aquí!',
                     url: window.location.origin + window.location.pathname.replace('index.html', '') + 'smartlanding.html'
                 });
             }
@@ -810,7 +810,7 @@ if (btnFoods && btnDrinks) {
 // GUIDED TOUR LOGIC
 function startGuidedTour() {
     if (!window.driver) {
-        console.warn("Driver.js no estÃ¡ cargado.");
+        console.warn("Driver.js no está cargado.");
         return;
     }
 
@@ -821,16 +821,16 @@ function startGuidedTour() {
         animate: true,
         allowClose: true,
         doneBtnText: 'Finalizar',
-        nextBtnText: 'Siguiente â†’',
-        prevBtnText: 'â† AtrÃ¡s',
+        nextBtnText: 'Siguiente →',
+        prevBtnText: 'â† Atrás',
         progressText: 'Paso {{current}} de {{total}}',
         popoverClass: 'tour-popover',
         steps: [
             {
                 element: '#audio-btn',
                 popover: {
-                    title: 'MÃºsica y AnimaciÃ³n',
-                    description: 'Disfruta de la experiencia completa con mÃºsica. Puedes pausarla o reanudarla aquÃ­.',
+                    title: 'Música y Animación',
+                    description: 'Disfruta de la experiencia completa con música. Puedes pausarla o reanudarla aquí.',
                     side: "left",
                     align: 'center'
                 }
@@ -838,8 +838,8 @@ function startGuidedTour() {
             {
                 element: '#hero',
                 popover: {
-                    title: 'Mis XV AÃ±os',
-                    description: 'Â¡Bienvenidos a mi invitaciÃ³n! Desliza para conocer todos los detalles de esta gran noche.',
+                    title: 'Mis XV Años',
+                    description: '¡Bienvenidos a mi invitación! Desliza para conocer todos los detalles de esta gran noche.',
                     side: "bottom",
                     align: 'center'
                 }
@@ -856,8 +856,8 @@ function startGuidedTour() {
             {
                 element: '#calendar-btn',
                 popover: {
-                    title: 'Agendar DÃ­a',
-                    description: 'Toca este botÃ³n para aÃ±adir el evento a tu calendario.',
+                    title: 'Agendar Día',
+                    description: 'Toca este botón para añadir el evento a tu calendario.',
                     side: "right",
                     align: 'center'
                 }
@@ -865,8 +865,8 @@ function startGuidedTour() {
             {
                 element: '#ubicacion',
                 popover: {
-                    title: 'DÃ³nde y CuÃ¡ndo',
-                    description: 'Conoce los detalles de la recepciÃ³n y usa los botones para abrir la ruta exacta en tu mapa.',
+                    title: 'Dónde y Cuándo',
+                    description: 'Conoce los detalles de la recepción y usa los botones para abrir la ruta exacta en tu mapa.',
                     side: "top",
                     align: 'start'
                 }
@@ -875,7 +875,7 @@ function startGuidedTour() {
                 element: '#itinerario',
                 popover: {
                     title: 'Itinerario',
-                    description: 'AcompÃ¡Ã±anos minuto a minuto en cada momento especial que hemos preparado.',
+                    description: 'Acompáñanos minuto a minuto en cada momento especial que hemos preparado.',
                     side: "top",
                     align: 'center'
                 }
@@ -883,7 +883,7 @@ function startGuidedTour() {
             {
                 element: '#codigo-vestimenta',
                 popover: {
-                    title: 'CÃ³digo de Vestimenta',
+                    title: 'Código de Vestimenta',
                     description: 'Consulta las sugerencias para el evento.',
                     side: "top",
                     align: 'center'
@@ -929,7 +929,7 @@ function startGuidedTour() {
                 element: '#clima',
                 popover: {
                     title: 'Clima en Tiempo Real',
-                    description: 'Prepara tu visita conociendo las condiciones actuales del clima para el dÃ­a del evento.',
+                    description: 'Prepara tu visita conociendo las condiciones actuales del clima para el día del evento.',
                     side: "top",
                     align: 'center'
                 }
@@ -938,7 +938,7 @@ function startGuidedTour() {
                 element: '#rsvp',
                 popover: {
                     title: 'Confirma tu Asistencia',
-                    description: 'Por favor, haz clic aquÃ­ para asegurar tu lugar. Â¡Te esperamos!',
+                    description: 'Por favor, haz clic aquí para asegurar tu lugar. ¡Te esperamos!',
                     side: "top",
                     align: 'center'
                 }
@@ -946,7 +946,7 @@ function startGuidedTour() {
         ],
         onDestroyStarted: () => {
             setTimeout(() => {
-                if (!driverObj.hasNextStep() || confirm("Â¿EstÃ¡s listo para explorar la invitaciÃ³n por ti mismo?")) {
+                if (!driverObj.hasNextStep() || confirm("¿Estás listo para explorar la invitación por ti mismo?")) {
                     driverObj.destroy();
                 }
             }, 0);

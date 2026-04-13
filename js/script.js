@@ -807,6 +807,205 @@ if (btnFoods && btnDrinks) {
     });
 }
 
+// PHOTO UPLOAD & GLOBAL GALLERY (CLOUDINARY)
+const CLOUD_NAME = 'dkozw2kmy';
+const UPLOAD_PRESET = 'unsigned_boda';
+const PHOTO_TAG = 'boda-fotos';
+
+const btnCamera = document.getElementById('btn-camera');
+const photoInput = document.getElementById('photo-input');
+const uploadStatus = document.getElementById('upload-status');
+const uploadSuccess = document.getElementById('upload-success');
+const photoGallery = document.getElementById('photo-gallery');
+
+async function fetchCloudinaryGallery() {
+    try {
+        const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${PHOTO_TAG}.json?t=${Date.now()}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        renderCloudinaryGallery(data.resources);
+    } catch (err) { console.error('Error fetching gallery:', err); }
+}
+
+function renderCloudinaryGallery(resources) {
+    if (!photoGallery || !resources || resources.length === 0) {
+        if (photoGallery) photoGallery.innerHTML = '';
+        return;
+    }
+    resources.sort((a, b) => b.version - a.version);
+    let html = '';
+    
+    // Feature the latest photo as the "visor" entry
+    const latest = resources[0];
+    const latestUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/v${latest.version}/${latest.public_id}.${latest.format}`;
+    
+    html += `
+        <div class="photo-gallery-latest reveal active">
+            <span class="photo-badge">Última Foto</span>
+            <img src="${latestUrl}" alt="Última foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
+        </div>
+    `;
+
+    if (resources.length > 1) {
+        html += '<div class="photo-gallery-grid reveal active">';
+        const limit = Math.min(resources.length, 13); // Show more thumbnails
+        for (let i = 1; i < limit; i++) {
+            const r = resources[i];
+            const fullUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
+            const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_300,h_300,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
+            html += `<img src="${thumbUrl}" alt="Foto del evento" onclick="openVisor('${fullUrl}')" style="cursor: pointer;">`;
+        }
+        html += '</div>';
+    }
+    photoGallery.innerHTML = html;
+}
+
+// ALBUM VISOR LOGIC
+const albumVisor = document.getElementById('album-visor');
+const visorImg = document.getElementById('visor-img');
+const visorClose = document.getElementById('visor-close');
+
+function openVisor(url) {
+    if (albumVisor && visorImg) {
+        visorImg.src = url;
+        albumVisor.style.display = "flex"; // Changed to flex for centering
+        document.body.style.overflow = "hidden"; // Prevent background scroll
+    }
+}
+
+if (visorClose) {
+    visorClose.onclick = () => {
+        albumVisor.style.display = "none";
+        document.body.style.overflow = "auto";
+    };
+}
+
+window.addEventListener('click', (event) => {
+    if (event.target == albumVisor) {
+        albumVisor.style.display = "none";
+        document.body.style.overflow = "auto";
+    }
+});
+
+fetchCloudinaryGallery();
+
+if (btnCamera) {
+    btnCamera.addEventListener('click', () => photoInput.click());
+}
+
+if (photoInput) {
+    photoInput.addEventListener('change', async function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        btnCamera.style.display = 'none';
+        uploadStatus.style.display = 'flex';
+        var formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', UPLOAD_PRESET);
+        formData.append('folder', 'xv-angela-alegria');
+        formData.append('tags', 'xv-angela');
+        try {
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
+            if (!res.ok) throw new Error('Upload failed');
+            uploadStatus.style.display = 'none';
+            uploadSuccess.style.display = 'flex';
+            setTimeout(() => { fetchCloudinaryGallery(); }, 1500);
+            setTimeout(function() {
+                uploadSuccess.style.display = 'none';
+                btnCamera.style.display = 'flex';
+                photoInput.value = '';
+            }, 3000);
+        } catch (err) {
+            console.error('Upload error:', err);
+            uploadStatus.style.display = 'none';
+            btnCamera.style.display = 'flex';
+            photoInput.value = '';
+            alert('Error al subir la foto.');
+        }
+    });
+}
+// QR CODE SHARING (Using static image)
+function initQRCode() {
+    const btnShareQr = document.getElementById('btn-share-qr');
+    if (!btnShareQr) return;
+
+    btnShareQr.addEventListener('click', async () => {
+        try {
+            // Use the absolute path for the QR image
+            const qrUrl = window.location.origin + window.location.pathname.replace('index.html', '') + 'qr.png';
+            const response = await fetch(qrUrl);
+            const blob = await response.blob();
+            const file = new File([blob], "codigo-qr-xv-angela.png", { type: "image/png" });
+            
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    files: [file],
+                    title: 'Código QR de mis XV Años',
+                    text: 'Escanea este código para compartir tus fotos conmigo.',
+                    url: window.location.href // Also include URL for context
+                });
+            } else if (navigator.share) {
+                await navigator.share({
+                    title: 'Código QR de mis XV Años',
+                    text: 'Escanea este código para compartir tus fotos conmigo.',
+                    url: qrUrl
+                });
+            } else {
+                // Fallback for desktop or non-sharing browsers: open in new tab
+                window.open(qrUrl, '_blank');
+            }
+        } catch (err) {
+            console.error('Error sharing QR:', err);
+            // Simple link fallback
+            if (navigator.share) {
+                await navigator.share({
+                    title: 'Álbum de Fotos de los XV Años',
+                    text: '¡Sube tus fotos aquí!',
+                    url: window.location.origin + window.location.pathname.replace('index.html', '') + 'smartlanding.html'
+                });
+            }
+        }
+    });
+}
+
+// HANDLE URL ACTIONS (Like auto-triggering camera)
+function handleUrlActions() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const action = urlParams.get('action');
+
+    if (action === 'take-photo') {
+        const overlay = document.getElementById('qr-camera-overlay');
+        const btnTakePhoto = document.getElementById('btn-qr-take-photo');
+        const btnSkip = document.getElementById('btn-qr-skip');
+        const btnCameraReal = document.getElementById('btn-camera');
+
+        if (overlay) {
+            overlay.style.display = 'flex';
+            
+            // If they want to take the photo
+            btnTakePhoto.addEventListener('click', () => {
+                overlay.style.display = 'none';
+                const fotosSection = document.getElementById('fotos');
+                if (fotosSection) {
+                    fotosSection.scrollIntoView({ behavior: 'auto' });
+                    if (btnCameraReal) btnCameraReal.click();
+                }
+            });
+
+            // If they just want to see the invitation
+            btnSkip.addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
+        }
+    }
+}
+
+// Initialize on Load
+window.addEventListener('load', () => {
+    initQRCode();
+    handleUrlActions();
+});
+
 // GUIDED TOUR LOGIC
 function startGuidedTour() {
     if (!window.driver) {

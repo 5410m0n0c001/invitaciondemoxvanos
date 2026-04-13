@@ -933,4 +933,3 @@ function startGuidedTour() {
         driverObj.drive();
     }, 500);
 }
-}

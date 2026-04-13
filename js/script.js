@@ -566,7 +566,7 @@ if (calendarBtn && calendarOptions) {
 // PHOTO UPLOAD & GLOBAL GALLERY (CLOUDINARY)
 const CLOUD_NAME = 'dkozw2kmy';
 const UPLOAD_PRESET = 'unsigned_boda';
-const PHOTO_TAG = 'xv-angela';
+const PHOTO_TAG = 'boda-fotos';
 
 const btnCamera = document.getElementById('btn-camera');
 const photoInput = document.getElementById('photo-input');
@@ -659,7 +659,7 @@ if (photoInput) {
         formData.append('file', file);
         formData.append('upload_preset', UPLOAD_PRESET);
         formData.append('folder', 'xv-angela-alegria');
-        formData.append('tags', 'xv-angela');
+        formData.append('tags', 'boda-fotos');
         try {
             const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
             if (!res.ok) throw new Error('Upload failed');
@@ -893,7 +893,7 @@ function startGuidedTour() {
                 element: '#padrinos',
                 popover: {
                     title: 'Familia',
-                    description: 'Con amor y gratitud a quienes me han acompaÃ±ado en este camino.',
+                    description: 'Con amor y gratitud a quienes me han acompañado en este camino.',
                     side: "top",
                     align: 'center'
                 }
@@ -902,7 +902,7 @@ function startGuidedTour() {
                 element: '#menus',
                 popover: {
                     title: 'Nuestra Propuesta',
-                    description: 'Conoce el detalle del banquete y la coctelerÃ­a que hemos seleccionado para ti.',
+                    description: 'Conoce el detalle del banquete y la coctelería que hemos seleccionado para ti.',
                     side: "top",
                     align: 'center'
                 }
@@ -911,7 +911,7 @@ function startGuidedTour() {
                 element: '#mesa-regalos',
                 popover: {
                     title: 'Mesa de Regalos',
-                    description: 'Si gustas tener un detalle, aquÃ­ encontrarÃ¡s nuestras sugerencias.',
+                    description: 'Si gustas tener un detalle, aquí encontrarás nuestras sugerencias.',
                     side: "top",
                     align: 'center'
                 }

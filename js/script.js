@@ -566,7 +566,7 @@ if (calendarBtn && calendarOptions) {
 // PHOTO UPLOAD & GLOBAL GALLERY (CLOUDINARY)
 const CLOUD_NAME = 'dkozw2kmy';
 const UPLOAD_PRESET = 'unsigned_boda';
-const PHOTO_TAG = 'boda-fotos';
+const PHOTO_TAG = 'xv-angela';
 
 const btnCamera = document.getElementById('btn-camera');
 const photoInput = document.getElementById('photo-input');

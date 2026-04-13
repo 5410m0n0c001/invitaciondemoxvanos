@@ -809,8 +809,6 @@ if (btnFoods && btnDrinks) {
 
 // GUIDED TOUR LOGIC
 function startGuidedTour() {
-    if (localStorage.getItem('tourCompleted') === 'true') return;
-
     if (!window.driver) {
         console.warn("Driver.js no está cargado.");
         return;
@@ -901,10 +899,37 @@ function startGuidedTour() {
                 }
             },
             {
+                element: '#menus',
+                popover: {
+                    title: 'Nuestra Propuesta',
+                    description: 'Conoce el detalle del banquete y la coctelería que hemos seleccionado para ti.',
+                    side: "top",
+                    align: 'center'
+                }
+            },
+            {
                 element: '#mesa-regalos',
                 popover: {
                     title: 'Mesa de Regalos',
                     description: 'Si gustas tener un detalle, aquí encontrarás nuestras sugerencias.',
+                    side: "top",
+                    align: 'center'
+                }
+            },
+            {
+                element: '#fotos',
+                popover: {
+                    title: 'Comparte tu Foto',
+                    description: 'Este álbum es dinámico. Las fotos que tomes en el evento se mostrarán automáticamente en tiempo real.',
+                    side: "top",
+                    align: 'center'
+                }
+            },
+            {
+                element: '#clima',
+                popover: {
+                    title: 'Clima en Tiempo Real',
+                    description: 'Prepara tu visita conociendo las condiciones actuales del clima para el día del evento.',
                     side: "top",
                     align: 'center'
                 }
@@ -923,7 +948,6 @@ function startGuidedTour() {
             setTimeout(() => {
                 if (!driverObj.hasNextStep() || confirm("¿Estás listo para explorar la invitación por ti mismo?")) {
                     driverObj.destroy();
-                    localStorage.setItem('tourCompleted', 'true');
                 }
             }, 0);
         },

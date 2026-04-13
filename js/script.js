@@ -245,7 +245,7 @@ function createPetal(container) {
 
 // HERO TYPING ANIMATION
 async function startHeroTyping() {
-    const nameText = "Ãngela Alegría Becerra";
+    const nameText = "Ángela Alegría Becerra";
     const line2 = "Te invito a celebrar conmigo este día tan especial";
 
     const namesEl = document.querySelector('.names-cursive');
@@ -597,8 +597,8 @@ function renderCloudinaryGallery(resources) {
     
     html += `
         <div class="photo-gallery-latest reveal active">
-            <span class="photo-badge">Ãšltima Foto</span>
-            <img src="${latestUrl}" alt="Ãšltima foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
+            <span class="photo-badge">Última Foto</span>
+            <img src="${latestUrl}" alt="Última foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
         </div>
     `;
 
@@ -715,7 +715,7 @@ function initQRCode() {
             // Simple link fallback
             if (navigator.share) {
                 await navigator.share({
-                    title: 'Ãlbum de Fotos de los XV Años',
+                    title: 'Álbum de Fotos de los XV Años',
                     text: '¡Sube tus fotos aquí!',
                     url: window.location.origin + window.location.pathname.replace('index.html', '') + 'smartlanding.html'
                 });
@@ -822,7 +822,7 @@ function startGuidedTour() {
         allowClose: true,
         doneBtnText: 'Finalizar',
         nextBtnText: 'Siguiente →',
-        prevBtnText: 'â† Atrás',
+        prevBtnText: '← Atrás',
         progressText: 'Paso {{current}} de {{total}}',
         popoverClass: 'tour-popover',
         steps: [

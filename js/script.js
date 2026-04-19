@@ -566,7 +566,7 @@ if (calendarBtn && calendarOptions) {
 // PHOTO UPLOAD & GLOBAL GALLERY (SUPABASE)
 const SUPABASE_URL = 'https://fhnnqmbbeeobassvfeox.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZobm5xbWJiZWVvYmFzc3ZmZW94Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDAyOTgsImV4cCI6MjA1NzgyMDMwNH0.7LrT_oGYH0cSMjLggJKo8y4s4NX5pLH-cGHBhjvXEW4';
-const ALBUM_ID = 'angela-xv';
+const ALBUM_ID = 'boda-demo';
 
 let supabaseClient = null;
 

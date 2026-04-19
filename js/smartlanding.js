@@ -1,13 +1,24 @@
-// Cloudinary Config (Same as main page)
-const CLOUD_NAME = 'dkozw2kmy';
-const UPLOAD_PRESET = 'unsigned_boda';
-const PHOTO_TAG = 'boda-fotos';
+// Supabase Config (Same as main page)
+const SUPABASE_URL = 'https://fhnnqmbbeeobassvfeox.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZobm5xbWJiZWVvYmFzc3ZmZW94Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDAyOTgsImV4cCI6MjA1NzgyMDMwNH0.7LrT_oGYH0cSMjLggJKo8y4s4NX5pLH-cGHBhjvXEW4';
+const ALBUM_ID = 'angela-xv';
+
+let supabaseClient = null;
 
 const btnCamera = document.getElementById('btn-camera');
 const photoInput = document.getElementById('photo-input');
 const uploadStatus = document.getElementById('upload-status');
 const uploadSuccess = document.getElementById('upload-success');
 const photoGallery = document.getElementById('photo-gallery');
+
+function initSupabase() {
+    if (typeof supabase !== 'undefined') {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        fetchGallery();
+    } else {
+        console.error('Supabase SDK not loaded');
+    }
+}
 
 // Handle Camera Button
 if (btnCamera) {
@@ -17,28 +28,38 @@ if (btnCamera) {
 // Handle Upload
 if (photoInput) {
     photoInput.addEventListener('change', async function(e) {
-        var file = e.target.files[0];
-        if (!file) return;
+        const file = e.target.files[0];
+        if (!file || !supabaseClient) return;
 
         // UI State: Uploading
         btnCamera.style.display = 'none';
         uploadStatus.style.display = 'block';
         uploadSuccess.style.display = 'none';
 
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', UPLOAD_PRESET);
-        formData.append('folder', 'boda-carolina-daniel');
-        formData.append('tags', PHOTO_TAG);
-
         try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { 
-                method: 'POST', 
-                body: formData 
-            });
-            
-            if (!res.ok) throw new Error('Upload failed');
-            
+            // 1. Upload to Supabase Storage
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${ALBUM_ID}/${Date.now()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                .from('fotos-album')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            // 2. Get Public URL
+            const { data: { publicUrl } } = supabaseClient.storage
+                .from('fotos-album')
+                .getPublicUrl(filePath);
+
+            // 3. Save to Database
+            const { error: dbError } = await supabaseClient
+                .from('fotos')
+                .insert([{ url: publicUrl, album_id: ALBUM_ID }]);
+
+            if (dbError) throw dbError;
+
             // UI State: Success
             uploadStatus.style.display = 'none';
             uploadSuccess.style.display = 'block';
@@ -65,34 +86,33 @@ if (photoInput) {
 
 // Fetch Gallery
 async function fetchGallery() {
+    if (!supabaseClient) return;
     try {
-        const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${PHOTO_TAG}.json?t=${Date.now()}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        renderGallery(data.resources);
+        const { data, error } = await supabaseClient
+            .from('fotos')
+            .select('*')
+            .eq('album_id', ALBUM_ID)
+            .order('created_at', { ascending: false })
+            .limit(6);
+
+        if (error) throw error;
+        renderGallery(data);
     } catch (err) { 
         console.error('Error fetching gallery:', err); 
     }
 }
 
-function renderGallery(resources) {
-    if (!photoGallery || !resources || resources.length === 0) return;
+function renderGallery(photos) {
+    if (!photoGallery || !photos || photos.length === 0) return;
     
-    // Sort by version (newest first)
-    resources.sort((a, b) => b.version - a.version);
-    
-    // Take first 6 for preview
-    const limit = Math.min(resources.length, 6);
     let html = '';
-    
-    for (let i = 0; i < limit; i++) {
-        const r = resources[i];
-        const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_200,h_200,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
-        html += `<img src="${thumbUrl}" alt="Recuerdo" style="animation-delay: ${i * 0.1}s">`;
+    for (let i = 0; i < photos.length; i++) {
+        const p = photos[i];
+        html += `<img src="${p.url}" alt="Recuerdo" style="animation-delay: ${i * 0.1}s">`;
     }
     
     photoGallery.innerHTML = html;
 }
 
 // Initial Load
-fetchGallery();
+document.addEventListener('DOMContentLoaded', initSupabase);

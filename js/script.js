@@ -563,10 +563,12 @@ if (calendarBtn && calendarOptions) {
     });
 }
 
-// PHOTO UPLOAD & GLOBAL GALLERY (CLOUDINARY)
-const CLOUD_NAME = 'dkozw2kmy';
-const UPLOAD_PRESET = 'unsigned_boda';
-const PHOTO_TAG = 'boda-fotos';
+// PHOTO UPLOAD & GLOBAL GALLERY (SUPABASE)
+const SUPABASE_URL = 'https://fhnnqmbbeeobassvfeox.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZobm5xbWJiZWVvYmFzc3ZmZW94Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDIyNDAyOTgsImV4cCI6MjA1NzgyMDMwNH0.7LrT_oGYH0cSMjLggJKo8y4s4NX5pLH-cGHBhjvXEW4';
+const ALBUM_ID = 'angela-xv';
+
+let supabaseClient = null;
 
 const btnCamera = document.getElementById('btn-camera');
 const photoInput = document.getElementById('photo-input');
@@ -574,109 +576,169 @@ const uploadStatus = document.getElementById('upload-status');
 const uploadSuccess = document.getElementById('upload-success');
 const photoGallery = document.getElementById('photo-gallery');
 
-async function fetchCloudinaryGallery() {
-    try {
-        const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${PHOTO_TAG}.json?t=${Date.now()}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        renderCloudinaryGallery(data.resources);
-    } catch (err) { console.error('Error fetching gallery:', err); }
+/**
+ * Initialize Supabase and start watchers
+ */
+function initSupabase() {
+    if (typeof supabase !== 'undefined') {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        fetchSupabaseGallery();
+        initRealtime();
+    } else {
+        console.error('Supabase SDK not loaded');
+        if (photoGallery) photoGallery.innerHTML = '<p class="text-danger">Error: No se pudo cargar el servicio de fotos.</p>';
+    }
 }
 
-function renderCloudinaryGallery(resources) {
-    if (!photoGallery || !resources || resources.length === 0) {
-        if (photoGallery) photoGallery.innerHTML = '';
+/**
+ * Fetch photos from Supabase and render the gallery
+ */
+async function fetchSupabaseGallery() {
+    if (!photoGallery) return;
+    if (!supabaseClient) return;
+
+    try {
+        const { data, error } = await supabaseClient
+            .from('fotos')
+            .select('*')
+            .eq('album_id', ALBUM_ID)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        renderSupabaseGallery(data);
+    } catch (err) {
+        console.error('Error fetching gallery:', err);
+        photoGallery.innerHTML = '<p class="text-muted">Iniciando galería...</p>';
+    }
+}
+
+/**
+ * Render the gallery UI with photos from Supabase
+ */
+function renderSupabaseGallery(photos) {
+    if (!photoGallery || !photos || photos.length === 0) {
+        if (photoGallery) photoGallery.innerHTML = '<p class="text-muted mt-4">Aún no hay fotos. ¡Sé el primero en subir una!</p>';
         return;
     }
-    resources.sort((a, b) => b.version - a.version);
+
     let html = '';
     
-    // Feature the latest photo as the "visor" entry
-    const latest = resources[0];
-    const latestUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/v${latest.version}/${latest.public_id}.${latest.format}`;
-    
+    // Feature the latest photo
+    const latest = photos[0];
     html += `
         <div class="photo-gallery-latest reveal active">
             <span class="photo-badge">Última Foto</span>
-            <img src="${latestUrl}" alt="Última foto subida" onclick="openVisor('${latestUrl}')" style="cursor: pointer;">
+            <img src="${latest.url}" alt="Última foto subida" onclick="openVisor('${latest.url}')" style="cursor: pointer;">
         </div>
     `;
 
-    if (resources.length > 1) {
+    // Thumbnails for the rest
+    if (photos.length > 1) {
         html += '<div class="photo-gallery-grid reveal active">';
-        const limit = Math.min(resources.length, 13); // Show more thumbnails
+        const limit = Math.min(photos.length, 13);
         for (let i = 1; i < limit; i++) {
-            const r = resources[i];
-            const fullUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
-            const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_300,h_300,c_fill,q_auto,f_auto/v${r.version}/${r.public_id}.${r.format}`;
-            html += `<img src="${thumbUrl}" alt="Foto del evento" onclick="openVisor('${fullUrl}')" style="cursor: pointer;">`;
+            const p = photos[i];
+            html += `<img src="${p.url}" alt="Foto del evento" onclick="openVisor('${p.url}')" style="cursor: pointer;">`;
         }
         html += '</div>';
     }
     photoGallery.innerHTML = html;
 }
 
-// ALBUM VISOR LOGIC
-const albumVisor = document.getElementById('album-visor');
-const visorImg = document.getElementById('visor-img');
-const visorClose = document.getElementById('visor-close');
-
-function openVisor(url) {
-    if (albumVisor && visorImg) {
-        visorImg.src = url;
-        albumVisor.style.display = "flex"; // Changed to flex for centering
-        document.body.style.overflow = "hidden"; // Prevent background scroll
-    }
+/**
+ * Real-time subscription for new photos
+ */
+function initRealtime() {
+    if (!supabaseClient) return;
+    supabaseClient
+        .channel('public:fotos')
+        .on('postgres_changes', { 
+            event: 'INSERT', 
+            schema: 'public', 
+            table: 'fotos',
+            filter: `album_id=eq.${ALBUM_ID}`
+        }, (payload) => {
+            console.log('Nueva foto recibida!', payload);
+            fetchSupabaseGallery();
+            showToast('¡Se ha compartido una nueva foto!');
+        })
+        .subscribe();
 }
 
-if (visorClose) {
-    visorClose.onclick = () => {
-        albumVisor.style.display = "none";
-        document.body.style.overflow = "auto";
-    };
+/**
+ * Toast Notification System
+ */
+function showToast(message) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<i class='bx bx-camera'></i><span>${message}</span>`;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.remove();
+    }, 5000);
 }
 
-window.addEventListener('click', (event) => {
-    if (event.target == albumVisor) {
-        albumVisor.style.display = "none";
-        document.body.style.overflow = "auto";
-    }
-});
+// Initial Fetch and Subscription
+document.addEventListener('DOMContentLoaded', initSupabase);
 
-fetchCloudinaryGallery();
-
+// Camera and Upload Logic
 if (btnCamera) {
     btnCamera.addEventListener('click', () => photoInput.click());
 }
 
 if (photoInput) {
     photoInput.addEventListener('change', async function(e) {
-        var file = e.target.files[0];
-        if (!file) return;
+        const file = e.target.files[0];
+        if (!file || !supabaseClient) return;
+
         btnCamera.style.display = 'none';
         uploadStatus.style.display = 'flex';
-        var formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', UPLOAD_PRESET);
-        formData.append('folder', 'xv-angela-alegria');
-        formData.append('tags', 'boda-fotos');
+
         try {
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: formData });
-            if (!res.ok) throw new Error('Upload failed');
+            // 1. Upload to Supabase Storage
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${ALBUM_ID}/${Date.now()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
+            const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                .from('fotos-album')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            // 2. Get Public URL
+            const { data: { publicUrl } } = supabaseClient.storage
+                .from('fotos-album')
+                .getPublicUrl(filePath);
+
+            // 3. Save to Database
+            const { error: dbError } = await supabaseClient
+                .from('fotos')
+                .insert([{ url: publicUrl, album_id: ALBUM_ID }]);
+
+            if (dbError) throw dbError;
+
+            // Success UI
             uploadStatus.style.display = 'none';
             uploadSuccess.style.display = 'flex';
-            setTimeout(() => { fetchCloudinaryGallery(); }, 1500);
-            setTimeout(function() {
+            
+            setTimeout(() => {
                 uploadSuccess.style.display = 'none';
                 btnCamera.style.display = 'flex';
                 photoInput.value = '';
             }, 3000);
+
         } catch (err) {
             console.error('Upload error:', err);
             uploadStatus.style.display = 'none';
             btnCamera.style.display = 'flex';
             photoInput.value = '';
-            alert('Error al subir la foto.');
+            alert('Error al subir la foto: ' + (err.message || 'Intente de nuevo.'));
         }
     });
 }
